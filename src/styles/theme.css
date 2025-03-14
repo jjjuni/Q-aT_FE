@@ -1,0 +1,68 @@
+@theme {
+    /* 색상 */
+    --color-gray-50: #F7F7F7;
+    --color-gray-100: #EAEAEA;
+    --color-gray-200: #CCCCCC;
+    --color-gray-300: #999999;
+    --color-gray-400: #707070;
+    --color-gray-500: #474747;
+    --color-gray-600: #252525;
+    --color-gray-700: #1C1C1C;
+    --color-gray-800: #1A1A1A;
+    --color-gray-900: #000000;
+
+    --color-point: #FF7700;
+
+    /* 타이포 */
+    --text-display-28-b: 28px;
+    --text-display-28-b--line-height: 1.2;
+    --text-display-28-b--font-weight: 700;
+
+    --text-display-24-b: 24px;
+    --text-display-24-b--line-height: 1.2;
+    --text-display-24-b--font-weight: 700;
+
+    --text-display-24-m: 24px;
+    --text-display-24-m--line-height: 1.2;
+    --text-display-24-m--font-weight: 500;
+
+    --text-headline-20-b: 20px;
+    --text-headline-20-b--line-height: 1.2;
+    --text-headline-20-b--font-weight: 700;
+    
+    --text-headline-20-m: 20px;
+    --text-headline-20-m--line-height: 1.2;
+    --text-headline-20-m--font-weight: 500;
+
+    --text-subhead-16-sb: 16px;
+    --text-subhead-16-sb--line-height: 1.2;
+    --text-subhead-16-sb--font-weight: 600;
+
+    --text-subhead-14-sb: 14px;
+    --text-subhead-14-sb--line-height: 1.2;
+    --text-subhead-14-sb--font-weight: 600;
+
+    --text-subhead-12-sb: 12px;
+    --text-subhead-12-sb--line-height: 1.2;
+    --text-subhead-12-sb--font-weight: 600;
+
+    --text-body-16-sb: 16px;
+    --text-body-16-sb--line-height: 1.2;
+    --text-body-16-sb--font-weight: 600;
+
+    --text-body-16-r: 16px;
+    --text-body-16-r--line-height: 1.2;
+    --text-body-16-r--font-weight: 400;
+
+    --text-body-14-r: 14px;
+    --text-body-14-r--line-height: 1.2;
+    --text-body-14-r--font-weight: 400;
+
+    --text-caption-12-r: 12px;
+    --text-caption-12-r--line-height: 1.2;
+    --text-caption-12-r--font-weight: 400;
+
+    --text-caption-10-l: 10px;
+    --text-caption-10-l--line-height: 1.2;
+    --text-caption-10-l--font-weight: 300;
+}
