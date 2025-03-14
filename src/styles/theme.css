@@ -14,6 +14,10 @@
     --color-point: #FF7700;
 
     /* 타이포 */
+    --text-display-32-b: 32px;
+    --text-display-32-b--line-height: 1.2;
+    --text-display-32-b--font-weight: 700;
+
     --text-display-28-b: 28px;
     --text-display-28-b--line-height: 1.2;
     --text-display-28-b--font-weight: 700;
@@ -45,10 +49,6 @@
     --text-subhead-12-sb: 12px;
     --text-subhead-12-sb--line-height: 1.2;
     --text-subhead-12-sb--font-weight: 600;
-
-    --text-body-16-sb: 16px;
-    --text-body-16-sb--line-height: 1.2;
-    --text-body-16-sb--font-weight: 600;
 
     --text-body-16-r: 16px;
     --text-body-16-r--line-height: 1.2;

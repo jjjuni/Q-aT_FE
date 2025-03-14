@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from "next/navigation";
-import { GoogleIcon, KakaoIcon, NaverIcon } from "../../public/svgs";
+import { GoogleIcon, KakaoIcon, NaverIcon } from "../../../public/svgs";
 
 const LoginPage = () => {
 
