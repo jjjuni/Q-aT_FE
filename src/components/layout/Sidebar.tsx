@@ -3,12 +3,22 @@
 import { usePathname, useRouter } from "next/navigation";
 import { ChatIcon, ChatPlusIcon, FriendIcon } from "../../../public/svgs";
 import ChatRoomList from "../chat/ChatRoomList";
+import useAuthStore from "@/store/useAuthStore";
+import { useEffect } from "react";
 
 const Sidebar = () => {
 
   const router = useRouter();
 
   const pathName = usePathname();
+
+  const {
+    setUser,
+  } = useAuthStore();
+
+  useEffect(() => {
+    setUser();
+  }, []);
 
   return (
     <div className={`py-2.5 flex flex-col gap-2.5 bg-gray-800 w-[300px] h-screen shrink-0 rounded-tr-[16px]`}>
