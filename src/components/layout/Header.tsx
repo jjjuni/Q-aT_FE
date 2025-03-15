@@ -1,7 +1,7 @@
 'use client'
 
 import { useParams, usePathname } from "next/navigation";
-import { ChatIcon, ChatPlusIcon } from "../../../public/svgs";
+import { ChatIcon, ChatPlusIcon, FriendIcon } from "../../../public/svgs";
 import { useEffect, useState } from "react";
 
 const Header = () => {
@@ -37,12 +37,10 @@ const Header = () => {
     }
   }, [pathName]);
 
-
-
   return (
     <div className={`flex items-center w-full h-[80px] px-10 py-2.5 gap-2.5 text-gray-300 border-b border-solid border-gray-600`}>
       {title === '새로운 채팅' && <ChatPlusIcon className={`w-9`} />}
-      {title === '친구' && <ChatPlusIcon className={`w-9`} />}
+      {title === '친구' && <FriendIcon className={`w-6`} />}
       {title === stringRoomId && <ChatIcon className={`w-9`} />}
 
       <p className={`text-display-24-b`}>{title}</p>
