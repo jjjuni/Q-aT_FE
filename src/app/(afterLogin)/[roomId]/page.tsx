@@ -8,6 +8,9 @@ import { useParams } from "next/navigation";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 import useAuthStore from "@/store/useAuthStore";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { axiosInstance } from "@/apis/axiosInstance";
+import { useInView } from "react-intersection-observer";
 
 interface ChatContent {
   sender: string;
@@ -29,6 +32,44 @@ export default function ChatRoom() {
   const [messages, setMessages] = useState<ChatContent[]>([]);
   const { roomId } = useParams();
 
+  const { ref, inView } = useInView({
+    threshold: 0,
+  })
+
+  const getChats = async (pageParam: number) => {
+    try {
+      const response = await axiosInstance.get(`${process.env.NEXT_PUBLIC_DOMAIN}/chats/${roomId}?page=${pageParam}`)
+      return response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const {
+    data,
+    isPending,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['chats', roomId],
+    queryFn: ({ pageParam }) => getChats(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => {
+      const currentPage = lastPage?.result?.currentPage;
+      const totalPage = lastPage?.result?.totalPage;
+      return currentPage < totalPage ? currentPage + 1 : undefined;
+    },
+    retry: 0,
+    enabled: !!roomId,
+  });
+
+  useEffect(() => {
+    if (inView && !isPending && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, isPending, hasNextPage]);
+
+  // 웹 소켓 연결
   useEffect(() => {
     const sock = new SockJS(`${process.env.NEXT_PUBLIC_SOCKET_URL}`); // SockJS 연결
     const stompClient = new Client({
@@ -56,7 +97,7 @@ export default function ChatRoom() {
   }, [roomId]);
 
   const sendMessage = () => {
-    if (client && "message".trim() !== "") {
+    if (client && messageInputText.trim() !== "") {
       console.log(email)
       client.publish({
         destination: `/app/sendMessage/${roomId}`,
@@ -68,8 +109,17 @@ export default function ChatRoom() {
 
   return (
     <Container className={`pb-2 flex flex-col justify-end`}>
-      <MessageList messages={messages}/>
-      <MessageInput messageInputText={messageInputText} setMessageInputText={setMessageInputText} sendMessage={sendMessage}/>
+      {isPending ? (
+        <div>로딩중...</div>
+      ) : (
+        <MessageList
+          prevMessageResponse={data}
+          messages={messages}
+          hasNextPage={hasNextPage}
+          ref={ref} />
+      )}
+
+      <MessageInput messageInputText={messageInputText} setMessageInputText={setMessageInputText} sendMessage={sendMessage} />
     </Container>
   );
 }
