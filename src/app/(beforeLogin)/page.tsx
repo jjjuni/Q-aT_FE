@@ -39,7 +39,7 @@ const LoginPage = () => {
             className={`flex gap-2 justify-center w-full h-[60px] text-center rounded-[12px] bg-gray-50 text-[20px] p-2 cursor-pointer`}
             onClick={() => login("google")}>
             <GoogleIcon className={`w-[20px]`} />
-            <p className={`text-center content-center text-[#000000]`}>카카오 로그인</p>
+            <p className={`text-center content-center text-[#000000]`}>구글 로그인</p>
           </div>
         </div>
       </div>
