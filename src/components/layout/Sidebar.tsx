@@ -22,7 +22,7 @@ const Sidebar = () => {
 
   return (
     <div className={`py-2.5 flex flex-col gap-2.5 bg-gray-800 w-[300px] h-screen shrink-0 rounded-tr-[16px]`}>
-      <div 
+      <div
         className={`px-5 text-display-28-b h-[60px] content-center cursor-pointer`}
         onClick={() => router.push('/home')}>
         로고
@@ -37,7 +37,7 @@ const Sidebar = () => {
             <ChatPlusIcon className={`w-6`} />
             <p>새로운 채팅</p>
           </div>
-          <div 
+          <div
             className={`flex gap-2.5 px-2.5 rounded-[8px] py-2.5 w-full text-headline-20-b cursor-pointer hover:bg-gray-600 hover:text-gray-200 ${pathName === '/friend' ? `text-gray-50 bg-gray-600` : `text-gray-300`}`}
             onClick={() => router.push('/friend')}>
             <FriendIcon className={`w-6`} />
@@ -52,7 +52,7 @@ const Sidebar = () => {
             <ChatIcon className={`h-5`} />
           </div>
           {/* 채팅 목록 */}
-          <ChatRoomList/>
+          <ChatRoomList />
         </div>
       </div>
     </div>

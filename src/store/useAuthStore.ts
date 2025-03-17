@@ -28,7 +28,10 @@ const useAuthStore = create<AuthState>((set) => ({
       });
     } catch (e) {
       console.log(e);
+      
       set({ isLoggedIn: false, name: null, email: null });
+
+      window.location.href = '/';
     }
   },
 }));
