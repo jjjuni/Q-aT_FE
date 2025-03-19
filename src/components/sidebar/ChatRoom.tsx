@@ -25,7 +25,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({
 
   const exitChatRoom = async () => {
     try {
-      const response = await axiosInstance.delete(`${process.env.NEXT_PUBLIC_DOMAIN}/chat-room/${roomUuid}`)
+      await axiosInstance.delete(`${process.env.NEXT_PUBLIC_DOMAIN}/chat-room/${roomUuid}`)
       queryClient.invalidateQueries({ queryKey: ['getUserChatRooms'] })
       setIsAlertModalOpen(false);
       setAlertModalText("");
