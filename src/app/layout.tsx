@@ -15,6 +15,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
+        <div className={`z-9999`} id="portal-root"/>
       </body>
     </html>
   );
