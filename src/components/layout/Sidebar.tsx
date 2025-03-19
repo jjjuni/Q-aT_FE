@@ -2,15 +2,33 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { ChatIcon, ChatPlusIcon, FriendIcon } from "../../../public/svgs";
-import ChatRoomList from "../chat/ChatRoomList";
+import ChatRoomList from "../sidebar/ChatRoomList";
 import useAuthStore from "@/store/useAuthStore";
 import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { axiosInstance } from "@/apis/axiosInstance";
 
 const Sidebar = () => {
 
   const router = useRouter();
 
   const pathName = usePathname();
+
+  const getUserChatRooms = async () => {
+    try {
+      const response = await axiosInstance.get(`${process.env.NEXT_PUBLIC_DOMAIN}/chat-room`)
+      return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const {
+    data,
+  } = useQuery({
+    queryKey: ['getUserChatRooms'],
+    queryFn: getUserChatRooms,
+  })
 
   const {
     setUser,
@@ -52,7 +70,8 @@ const Sidebar = () => {
             <ChatIcon className={`h-5`} />
           </div>
           {/* 채팅 목록 */}
-          <ChatRoomList />
+          <ChatRoomList 
+            data={data}/>
         </div>
       </div>
     </div>
