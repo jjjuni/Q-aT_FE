@@ -33,7 +33,7 @@ const LoginPage = () => {
             className={`flex gap-2 justify-center w-full h-[60px] text-center rounded-[12px] bg-[#03C75A] text-[20px] p-2 cursor-pointer`}
             onClick={() => login("naver")}>
             <NaverIcon className={`w-[20px]`} />
-            <p className={`text-center content-center text-[#000000]`}>네이버 로그인</p>
+            <p className={`text-center content-center text-white`}>네이버 로그인</p>
           </div>
           <div
             className={`flex gap-2 justify-center w-full h-[60px] text-center rounded-[12px] bg-gray-50 text-[20px] p-2 cursor-pointer`}
