@@ -1,4 +1,4 @@
-export default function Friend() {
+export default function FriendPage() {
 
   return (
     <>

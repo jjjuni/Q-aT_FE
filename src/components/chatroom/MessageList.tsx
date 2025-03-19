@@ -4,6 +4,7 @@ import useAuthStore from "@/store/useAuthStore";
 import { ChatIcon } from "../../../public/svgs";
 import Message from "./Message";
 import { useEffect, useRef, useState } from "react";
+import usePageInfoStore from "@/store/usePageInfoStore";
 
 interface ChatContent {
   sender: string;
@@ -12,7 +13,7 @@ interface ChatContent {
   sendAt: string;
 }
 
-interface PrevMessageResponse {
+interface PrevMessageData {
   pages: PrevMessagePage[];
 }
 
@@ -26,18 +27,22 @@ interface PrevMessagePage {
 }
 
 interface MessageListProps {
-  prevMessageResponse: PrevMessageResponse | undefined;
+  prevMessageData: PrevMessageData | undefined;
   messages: ChatContent[];
   hasNextPage: boolean;
   ref: (node?: Element | null) => void;
 }
 
 const MessageList: React.FC<MessageListProps> = ({
-  prevMessageResponse,
+  prevMessageData,
   messages,
   hasNextPage,
   ref,
 }) => {
+
+  const {
+    title,
+  } = usePageInfoStore();
 
   const {
     email,
@@ -52,7 +57,7 @@ const MessageList: React.FC<MessageListProps> = ({
 
       messageDivRef.current.scrollTop = messageDivRef.current.scrollHeight - scrollDistance;
     }
-  }, [prevMessageResponse?.pages?.length]);
+  }, [prevMessageData?.pages?.length]);
 
 
   // 현재 스크롤 위치 저장
@@ -88,10 +93,10 @@ const MessageList: React.FC<MessageListProps> = ({
           <div className={`py-2.5 border-b-2 border-solid border-gray-600`}>
             <div className={`flex gap-2.5 px-2.5 py-2.5 justify-center`}>
               <ChatIcon className={`w-9`} />
-              <p className={`text-display-32-b`}>&apos;&apos;room1&apos;&apos; 에 오신 걸 환영합니다!</p>
+              <p className={`text-display-32-b`}>&apos;&apos;{title}&apos;&apos; 에 오신 걸 환영합니다!</p>
             </div>
             <div className={`px-2.5 pb-2.5`}>
-              <p className={`text-subhead-16-sb text-gray-300 text-center`}>&apos;&apos;room1&apos;&apos; 이 시작된 곳이에요</p>
+              <p className={`text-subhead-16-sb text-gray-300 text-center`}>&apos;&apos;{title}&apos;&apos; 이 시작된 곳이에요</p>
             </div>
           </div>
         }
@@ -101,7 +106,7 @@ const MessageList: React.FC<MessageListProps> = ({
 
         {/* 이전 메시지 */}
         <div className={`flex flex-col-reverse gap-4`}>
-          {prevMessageResponse?.pages?.map((page) => (
+          {prevMessageData?.pages?.map((page) => (
             page?.result?.chatList?.map((item, index) => {
               return (
                 <Message

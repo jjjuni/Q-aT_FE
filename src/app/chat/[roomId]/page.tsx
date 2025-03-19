@@ -14,7 +14,7 @@ const Chat = () => {
 
   const params = useParams();
 
-  const { roomId } = params;
+  const { roomUuid } = params;
 
   const messageDivRef = useRef<HTMLDivElement | null>(null);
 
@@ -26,7 +26,7 @@ const Chat = () => {
       onConnect: () => {
         console.log("Connected to WebSocket");
 
-        stompClient.subscribe(`/topic/${roomId}`, (msg) => {
+        stompClient.subscribe(`/topic/${roomUuid}`, (msg) => {
           setMessages((prev) => [...prev, JSON.parse(msg.body).content]); // 메시지 수신
         });
       },
@@ -39,13 +39,13 @@ const Chat = () => {
     return () => {
       stompClient.deactivate(); // 안전한 연결 종료
     };
-  }, [roomId]);
+  }, [roomUuid]);
 
   const sendMessage = () => {
     if (client && message.trim() !== "") {
       client.publish({
-        destination: `/app/sendMessage/${roomId}`,
-        body: JSON.stringify({ content: message, sender: "User", roomId: roomId }),
+        destination: `/app/sendMessage/${roomUuid}`,
+        body: JSON.stringify({ content: message, sender: "User", roomUuid }),
       });
       setMessage(""); // 입력창 초기화
     }

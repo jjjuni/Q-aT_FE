@@ -19,18 +19,17 @@ interface ChatContent {
   sendAt: string;
 }
 
-export default function ChatRoom() {
+export default function ChatRoomPage() {
 
   const {
     name,
-    email,
   } = useAuthStore();
 
   const [messageInputText, setMessageInputText] = useState('');
 
   const [client, setClient] = useState<Client | null>(null);
   const [messages, setMessages] = useState<ChatContent[]>([]);
-  const { roomId } = useParams();
+  const { roomUuid } = useParams();
 
   const { ref, inView } = useInView({
     threshold: 0,
@@ -38,7 +37,7 @@ export default function ChatRoom() {
 
   const getChats = async (pageParam: number) => {
     try {
-      const response = await axiosInstance.get(`${process.env.NEXT_PUBLIC_DOMAIN}/chats/${roomId}?page=${pageParam}`)
+      const response = await axiosInstance.get(`${process.env.NEXT_PUBLIC_DOMAIN}/chat/${roomUuid}?page=${pageParam}`)
       return response.data
     } catch (error) {
       console.log(error)
@@ -46,12 +45,12 @@ export default function ChatRoom() {
   }
 
   const {
-    data,
+    data: prevMessageData,
     isPending,
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ['chats', roomId],
+    queryKey: ['chats', roomUuid],
     queryFn: ({ pageParam }) => getChats(pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
@@ -60,7 +59,7 @@ export default function ChatRoom() {
       return currentPage < totalPage ? currentPage + 1 : undefined;
     },
     retry: 0,
-    enabled: !!roomId,
+    enabled: !!roomUuid,
   });
 
   useEffect(() => {
@@ -71,14 +70,14 @@ export default function ChatRoom() {
 
   // 웹 소켓 연결
   useEffect(() => {
-    const sock = new SockJS(`${process.env.NEXT_PUBLIC_SOCKET_URL}`); // SockJS 연결
+    const sock = new SockJS(`${process.env.NEXT_PUBLIC_SOCKET_URL}?roomUuid=${roomUuid}`); // SockJS 연결
     const stompClient = new Client({
       webSocketFactory: () => sock,
       debug: (str) => console.log(str),
       onConnect: () => {
         console.log("Connected to WebSocket");
 
-        stompClient.subscribe(`/topic/${roomId}`, (msg) => {
+        stompClient.subscribe(`/topic/${roomUuid}`, (msg) => {
 
           const ChatContent = JSON.parse(msg.body)
 
@@ -94,14 +93,13 @@ export default function ChatRoom() {
     return () => {
       stompClient.deactivate(); // 안전한 연결 종료
     };
-  }, [roomId]);
+  }, [roomUuid]);
 
   const sendMessage = () => {
     if (client && messageInputText.trim() !== "") {
-      console.log(email)
       client.publish({
-        destination: `/app/sendMessage/${roomId}`,
-        body: JSON.stringify({ message: messageInputText, sender: name, email, roomId }),
+        destination: `/app/sendMessage/${roomUuid}`,
+        body: JSON.stringify({ message: messageInputText, sender: name }),
       });
       setMessageInputText(""); // 입력창 초기화
     }
@@ -113,7 +111,7 @@ export default function ChatRoom() {
         <div>로딩중...</div>
       ) : (
         <MessageList
-          prevMessageResponse={data}
+          prevMessageData={prevMessageData}
           messages={messages}
           hasNextPage={hasNextPage}
           ref={ref} />

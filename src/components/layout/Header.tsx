@@ -1,22 +1,56 @@
 'use client'
 
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { ChatIcon, ChatPlusIcon, FriendIcon } from "../../../public/svgs";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { axiosInstance } from "@/apis/axiosInstance";
+import { useQuery } from "@tanstack/react-query";
+import usePageInfoStore from "@/store/usePageInfoStore";
+import { AxiosError } from "axios";
+
+interface ErrorResponse {
+  code: string;
+  message: string;
+}
 
 const Header = () => {
 
   const pathName = usePathname();
-  const { roomId } = useParams();
-  const stringRoomId = Array.isArray(roomId) ? roomId[0] : roomId;
+  const { roomUuid } = useParams();
+  const stringRoomUuid = Array.isArray(roomUuid) ? roomUuid[0] : roomUuid;
 
-  const [title, setTitle] = useState('');
+  const router = useRouter();
 
+  const {
+    title,
+    setTitle,
+  } = usePageInfoStore();
+
+  const getChatRoomInfo = async () => {
+    try {
+      const response = await axiosInstance.get(`${process.env.NEXT_PUBLIC_DOMAIN}/chat-room/${stringRoomUuid}`)
+      return response.data;
+    } catch (e) {
+      const error = e as AxiosError<ErrorResponse>;
+      if (error.response?.data.code === 'ROOM4003') {
+        // 추후에 모달 창 추가 할 예정
+        router.push('/home');
+      }
+    }
+  }
+
+  const {
+    data: chatRoomInfoData,
+  } = useQuery({
+    queryKey: ['chatRoomInfo', stringRoomUuid],
+    queryFn: getChatRoomInfo,
+    enabled: !!stringRoomUuid,
+  });
 
   useEffect(() => {
 
-    if (stringRoomId) {
-      setTitle(stringRoomId);
+    if (stringRoomUuid) {
+      setTitle(chatRoomInfoData?.result?.roomName);
     } else {
       switch (pathName) {
         case '/newchat':
@@ -35,13 +69,13 @@ const Header = () => {
           break;
       }
     }
-  }, [pathName]);
+  }, [pathName, chatRoomInfoData]);
 
   return (
     <div className={`flex items-center w-full h-[80px] px-10 py-2.5 gap-2.5 text-gray-300 border-b border-solid border-gray-600`}>
       {title === '새로운 채팅' && <ChatPlusIcon className={`w-9`} />}
       {title === '친구' && <FriendIcon className={`w-6`} />}
-      {title === stringRoomId && <ChatIcon className={`w-9`} />}
+      {title === stringRoomUuid && <ChatIcon className={`w-9`} />}
 
       <p className={`text-display-24-b`}>{title}</p>
     </div>
