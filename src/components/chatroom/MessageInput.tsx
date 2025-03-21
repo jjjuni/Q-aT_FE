@@ -24,7 +24,9 @@ const MessageInput:React.FC<MessageInputProps> = ({
   return (
     <div className={`px-5 py-5 w-full`}>
       <input
-        className={`w-full rounded-[16px] px-5 py-4 bg-gray-600 text-subhead-16-sb text-gray-50 placeholder:text-gray-500`}
+        className={`
+          w-full px-3 py-3 rounded-[8px] text-subhead-12-sb bg-gray-600 text-gray-50 placeholder:text-gray-500
+          @2xl:px-5 @2xl:py-4 @2xl:rounded-[12px] @2xl:text-subhead-16-sb`}
         placeholder="메시지를 입력해주세요"
         value={messageInputText}
         onKeyDown={handleKeyDown}

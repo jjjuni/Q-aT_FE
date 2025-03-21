@@ -1,4 +1,13 @@
+@layer utilities {
+    .transition-custom {
+        transition: var(--transition-custom);
+    }
+}
+
 @theme {
+    /* 트랜지션 */
+    --transition-custom: all 300ms ease-out;
+
     /* 색상 */
     --color-gray-50: #F7F7F7;
     --color-gray-100: #EAEAEA;

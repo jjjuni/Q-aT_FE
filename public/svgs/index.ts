@@ -5,3 +5,4 @@ export { default as ChatPlusIcon } from "./chat_plus_icon.svg";
 export { default as FriendIcon } from "./friend_icon.svg";
 export { default as ChatIcon } from "./chat_icon.svg";
 export { default as XIcon } from "./x_icon.svg";
+export { default as MenuIcon } from "./menu_icon.svg";

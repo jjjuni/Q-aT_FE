@@ -3,6 +3,7 @@
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import AlertModal from "@/components/portal/AlertModal";
+import useSidebarStore from "@/store/useSidebarStore";
 import "@/styles/globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -14,6 +15,10 @@ export default function InSiteLayout({
   children: React.ReactNode;
 }>) {
 
+  const {
+    isSidebarOpen,
+  } = useSidebarStore();
+
   const [queryClient] = useState(() => new QueryClient());
 
   return (
@@ -21,7 +26,7 @@ export default function InSiteLayout({
     <QueryClientProvider client={queryClient}>
       <div className={`flex`}>
         <Sidebar />
-        <div className={`w-full`}>
+        <div className={`${isSidebarOpen ? `sm:pl-[250px] lg:pl-[300px]` : ``} w-full transition-custom @container`}>
           <Header />
           {children}
         </div>

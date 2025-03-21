@@ -34,7 +34,7 @@ export default function NewChatPage() {
         }
       )
       const roomUuid = response.data.result.roomUuid
-      queryClient.invalidateQueries({ queryKey: ["getUserChatRooms"]});
+      queryClient.invalidateQueries({ queryKey: ["getUserChatRooms"] });
       router.push(`/${roomUuid}`)
 
     } catch (e) {
@@ -46,41 +46,54 @@ export default function NewChatPage() {
     try {
       const response = await axiosInstance.post(`${process.env.NEXT_PUBLIC_DOMAIN}/chat-room/${chatRoomUuid}`)
       const roomUuid = response.data.result.roomUuid
-      queryClient.invalidateQueries({ queryKey: ["getUserChatRooms"]});
+      queryClient.invalidateQueries({ queryKey: ["getUserChatRooms"] });
       router.push(`/${roomUuid}`)
     } catch (e) {
       const error = e as AxiosError<error['response']['data']>;
       if (error.response?.data.code === 'ROOM4001') {
         alert('존재하지 않는 채팅방입니다');
-      } else if (error.response?.data.code === 'ROOM4002'){
+      } else if (error.response?.data.code === 'ROOM4002') {
         alert('이미 참여한 채팅방입니다');
-      } 
+      }
     }
   }
 
-  const handleButton = (e:MouseEvent, fn: () => void) => {
+  const handleButton = (e: MouseEvent, fn: () => void) => {
     e.stopPropagation();
     fn();
   }
 
   return (
-    <Container className={`py-[60px] px-[32px] flex flex-col justify-between`}>
+    <Container className={`py-[60px] px-[32px] flex flex-col justify-between gap-10`}>
       <div>
-        <div className={`flex flex-col gap-4 px-2.5 py-2.5 pb-[40px] text-center border-b border-solid border-gray-600`}>
-          <p className={`text-gray-50 text-display-32-b`}>새로운 서버를 생성해 채팅을 시작해보세요!</p>
-          <div className={`flex flex-col gap-2.5 text-body-16-r text-gray-300`}>
+        <div className={`
+          flex flex-col gap-4 px-2.5 py-2.5 pb-[20px] text-center border-b border-solid border-gray-600
+          @2xl:pb-[40px]`}>
+          <p className={`
+            text-headline-20-b text-gray-50 transition-custom
+            @2xl:text-display-32-b`}>
+            새로운 서버를 생성해 채팅을 시작해보세요!</p>
+          <div className={`
+            text-caption-12-r flex flex-col gap-1 text-gray-300 transition-custom
+            @2xl:text-body-16-r @2xl:gap-2.5`}>
             <p>참여하고 싶은 채팅 서버 이름을 입력해주세요!</p>
             <p>친구를 초대해 함께하세요!</p>
           </div>
         </div>
-        <div className={`flex flex-col gap-10 w-full`}>
+        <div className={`
+          flex flex-col w-full gap-4
+          @2xl:gap-10 `}>
           <input
-            className={`text-gray-50 rounded-[12px] bg-gray-600 px-5 py-4 text-subhead-16-sb placeholder:text-gray-500`}
+            className={`
+              text-caption-12-r px-3 py-3 rounded-[8px] text-gray-50 bg-gray-600 placeholder:text-gray-500
+              @2xl:text-subhead-16-sb @2xl:px-5 @2xl:py-4 @2xl:rounded-[12px]`}
             placeholder="채팅 서버 이름을 입력해주세요"
             value={chatRoomName}
             onChange={(e) => { setChatRoomName(e.target.value) }} />
           <button
-            className={`rounded-[12px] bg-gray-50 text-gray-800 px-5 py-4 text-subhead-16-sb disabled:bg-gray-600 disabled:text-gray-500`}
+            className={`
+              text-caption-12-r px-3 py-3 rounded-[8px] bg-gray-50 text-gray-800 disabled:bg-gray-600 disabled:text-gray-500
+              @2xl:text-subhead-16-sb @2xl:px-5 @2xl:py-4 @2xl:rounded-[12px]`}
             onClick={(e) => handleButton(e, createChatRoom)}
             disabled={chatRoomName.trim() === ''}>
             입장하기</button>
@@ -88,20 +101,33 @@ export default function NewChatPage() {
       </div>
 
       <div>
-        <div className={`flex flex-col gap-4 px-2.5 py-2.5 pb-[40px] text-center border-b border-solid border-gray-600`}>
-          <p className={`text-gray-50 text-display-32-b`}>기존의 서버에 참여해 채팅을 시작해보세요!</p>
-          <div className={`flex flex-col gap-2.5 text-body-16-r text-gray-300`}>
+      <div className={`
+          flex flex-col gap-4 px-2.5 py-2.5 pb-[20px] text-center border-b border-solid border-gray-600
+          @2xl:pb-[40px]`}>
+          <p className={`
+            text-headline-20-b text-gray-50 transition-custom
+            @2xl:text-display-32-b`}>
+            기존의 서버에 참여해 채팅을 시작해보세요!</p>
+          <div className={`
+            text-caption-12-r flex flex-col gap-2.5 text-gray-300 transition-custom
+            @2xl:text-body-16-r`}>
             <p>참여하고 싶은 채팅 서버 ID를 입력해주세요</p>
           </div>
         </div>
-        <div className={`flex flex-col gap-10 w-full`}>
+        <div className={`
+          flex flex-col w-full gap-4
+          @2xl:gap-10 `}>
           <input
-            className={`text-gray-50 rounded-[12px] bg-gray-600 px-5 py-4 text-subhead-16-sb placeholder:text-gray-500`}
+            className={`
+              text-caption-12-r px-3 py-3 rounded-[8px] text-gray-50 bg-gray-600 placeholder:text-gray-500
+              @2xl:text-subhead-16-sb @2xl:px-5 @2xl:py-4 @2xl:rounded-[12px]`}
             placeholder="채팅 서버 ID를 입력해주세요"
             value={chatRoomUuid}
             onChange={(e) => { setChatRoomUuid(e.target.value) }} />
           <button
-            className={`rounded-[12px] bg-gray-50 text-gray-800 px-5 py-4 text-subhead-16-sb disabled:bg-gray-600 disabled:text-gray-500`}
+            className={`
+              text-caption-12-r px-3 py-3 rounded-[8px] bg-gray-50 text-gray-800 disabled:bg-gray-600 disabled:text-gray-500
+              @2xl:text-subhead-16-sb @2xl:px-5 @2xl:py-4 @2xl:rounded-[12px]`}
             onClick={(e) => handleButton(e, joinChatRoom)}
             disabled={chatRoomUuid.trim() === ''}>
             입장하기</button>

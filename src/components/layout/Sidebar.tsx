@@ -7,8 +7,13 @@ import useAuthStore from "@/store/useAuthStore";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/apis/axiosInstance";
+import useSidebarStore from "@/store/useSidebarStore";
 
 const Sidebar = () => {
+
+  const {
+    isSidebarOpen,
+  } = useSidebarStore();
 
   const router = useRouter();
 
@@ -39,7 +44,10 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <div className={`py-2.5 flex flex-col gap-2.5 bg-gray-800 w-[300px] h-screen shrink-0 rounded-tr-[16px]`}>
+    <div className={`
+      ${isSidebarOpen ? `` : `translate-x-[-250px] lg:translate-x-[-300px]`} 
+      w-[250px] fixed py-2.5 flex flex-col gap-2.5 bg-gray-800 min-h-full shrink-0 rounded-tr-[16px] transition-custom 
+      lg:w-[300px]`}>
       <div
         className={`px-5 text-display-28-b h-[60px] content-center cursor-pointer`}
         onClick={() => router.push('/home')}>

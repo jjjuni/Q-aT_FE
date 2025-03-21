@@ -1,12 +1,13 @@
 'use client'
 
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { ChatIcon, ChatPlusIcon, FriendIcon } from "../../../public/svgs";
+import { ChatIcon, ChatPlusIcon, FriendIcon, MenuIcon } from "../../../public/svgs";
 import { useEffect } from "react";
 import { axiosInstance } from "@/apis/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import usePageInfoStore from "@/store/usePageInfoStore";
 import { AxiosError } from "axios";
+import useSidebarStore from "@/store/useSidebarStore";
 
 interface ErrorResponse {
   code: string;
@@ -20,6 +21,11 @@ const Header = () => {
   const stringRoomUuid = Array.isArray(roomUuid) ? roomUuid[0] : roomUuid;
 
   const router = useRouter();
+
+  const {
+    isSidebarOpen,
+    setIsSidebarOpen,
+  } = useSidebarStore();
 
   const {
     title,
@@ -72,12 +78,17 @@ const Header = () => {
   }, [pathName, chatRoomInfoData]);
 
   return (
-    <div className={`flex items-center w-full h-[80px] px-10 py-2.5 gap-2.5 text-gray-300 border-b border-solid border-gray-600`}>
-      {title === '새로운 채팅' && <ChatPlusIcon className={`w-9`} />}
-      {title === '친구' && <FriendIcon className={`w-6`} />}
-      {title === stringRoomUuid && <ChatIcon className={`w-9`} />}
+    <div className={`flex items-center w-full h-[80px] pl-5 pr-10 py-2.5 gap-5 text-gray-300 border-b border-solid border-gray-600`}>
+      <MenuIcon 
+        className={`w-7 @2xl:w-9 cursor-pointer transition-custom`}
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}/>
+      <div className={`flex gap-2.5 items-center `}>
+        {title === '새로운 채팅' && <ChatPlusIcon className={`w-7 @2xl:w-9 transition-custom`} />}
+        {title === '친구' && <FriendIcon className={`w-5 @2xl:w-6 transition-custom`} />}
+        {title === stringRoomUuid && <ChatIcon className={`w-7 @2xl:w-9 transition-custom`} />}
 
-      <p className={`text-display-24-b`}>{title}</p>
+        <p className={`mt-0.5 text-headline-20-b @2xl:mt-1 @2xl:text-display-24-b transition-custom`}>{title}</p>
+      </div>
     </div>
   )
 }
