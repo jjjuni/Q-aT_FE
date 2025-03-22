@@ -78,9 +78,11 @@ const Header = () => {
   }, [pathName, chatRoomInfoData]);
 
   return (
-    <div className={`flex items-center w-full h-[80px] pl-5 pr-10 py-2.5 gap-5 text-gray-300 border-b border-solid border-gray-600`}>
+    <div className={`
+      h-[60px] flex items-center w-full pl-5 pr-10 py-2.5 gap-5 text-gray-300 border-b border-solid border-gray-600 transition-custom
+      @2xl:h-[80px]`}>
       <MenuIcon 
-        className={`w-7 @2xl:w-9 cursor-pointer transition-custom`}
+        className={`w-7 @2xl:w-9 cursor-pointer hover:text-gray-50 transition-custom`}
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}/>
       <div className={`flex gap-2.5 items-center `}>
         {title === '새로운 채팅' && <ChatPlusIcon className={`w-7 @2xl:w-9 transition-custom`} />}

@@ -55,17 +55,17 @@ const ChatRoom: React.FC<ChatRoomProps> = ({
 
   return (
     <div
-      className={`flex items-center justify-between px-3 py-3 rounded-[8px] hover:bg-gray-600 hover:text-gray-50 ${roomUuid === currentParam ? `text-gray-200 bg-gray-600` : 'text-gray-300'}`}
+      className={`flex items-center justify-between px-2.5 py-2.5 rounded-[8px] hover:bg-gray-600 hover:text-gray-50 ${roomUuid === currentParam ? `text-gray-200 bg-gray-600` : 'text-gray-300'}`}
       onClick={() => router.push(`/${roomUuid}`)}
       onMouseEnter={() => setIsMouseOver(true)}
       onMouseLeave={() => setIsMouseOver(false)}>
       <div className={`flex gap-2.5 items-center`}>
-        <ChatIcon className={`h-6`} />
-        <p className={`text-subhead-16-sb`}>{roomName}</p>
+        <ChatIcon className={`w-5 lg:w-6 transition-custom`} />
+        <p className={`text-subhead-14-sb lg:text-subhead-16-sb transition-custom`}>{roomName}</p>
       </div>
       <div
         onClick={(e) => handleXButton(e)}>
-        <XIcon className={`w-6 hover:text-point ${isMouseOver ? `` : `hidden`}`} />
+        <XIcon className={`w-5 lg:w-6 hover:text-point ${isMouseOver ? `` : `hidden`} transition-custom`} />
       </div>
     </div>
   )
