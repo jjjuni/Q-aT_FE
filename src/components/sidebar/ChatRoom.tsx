@@ -60,12 +60,12 @@ const ChatRoom: React.FC<ChatRoomProps> = ({
       onMouseEnter={() => setIsMouseOver(true)}
       onMouseLeave={() => setIsMouseOver(false)}>
       <div className={`flex gap-2.5 items-center`}>
-        <ChatIcon className={`w-5 lg:w-6 transition-custom`} />
-        <p className={`text-subhead-14-sb lg:text-subhead-16-sb transition-custom`}>{roomName}</p>
+        <ChatIcon className={`w-5 @2xl:w-6 transition-custom`} />
+        <p className={`text-subhead-14-sb @2xl:text-subhead-16-sb transition-custom`}>{roomName}</p>
       </div>
       <div
         onClick={(e) => handleXButton(e)}>
-        <XIcon className={`w-5 lg:w-6 hover:text-point ${isMouseOver ? `` : `hidden`} transition-custom`} />
+        <XIcon className={`w-5 @2xl:w-6 hover:text-point ${isMouseOver ? `` : `hidden`} transition-custom`} />
       </div>
     </div>
   )

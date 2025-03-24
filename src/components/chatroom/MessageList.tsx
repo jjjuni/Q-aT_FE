@@ -86,7 +86,7 @@ const MessageList: React.FC<MessageListProps> = ({
   }, [messages])
 
   return (
-    <div ref={messageDivRef} className={`overflow-y-auto`}>
+    <div ref={messageDivRef} className={`overflow-y-auto grow`}>
       <div className="flex flex-col gap-4 px-5 py-2.5">
         {/* 환영 메시지 */}
         {!hasNextPage &&
@@ -111,9 +111,26 @@ const MessageList: React.FC<MessageListProps> = ({
         <div ref={ref}></div>
 
         {/* 이전 메시지 */}
-        <div className={`flex flex-col-reverse gap-4`}>
-          {prevMessageData?.pages?.map((page) => (
-            page?.result?.chatList?.map((item, index) => {
+        {prevMessageData?.pages?.length && prevMessageData?.pages[0]?.result?.chatList?.length > 0 &&
+          <div className={`flex flex-col-reverse gap-4`}>
+            {prevMessageData?.pages?.map((page) => (
+              page?.result?.chatList?.map((item, index) => {
+                return (
+                  <Message
+                    key={index}
+                    name={item.sender}
+                    message={item.message}
+                    time={item.sendAt}
+                    isMyMessage={item.email === email} />)
+              }
+              )))}
+          </div>
+        }
+
+        {/* 새로운 메시지 */}
+        {messages.length > 0 &&
+          <div className={`flex flex-col gap-4`}>
+            {messages?.map((item, index) => {
               return (
                 <Message
                   key={index}
@@ -121,22 +138,9 @@ const MessageList: React.FC<MessageListProps> = ({
                   message={item.message}
                   time={item.sendAt}
                   isMyMessage={item.email === email} />)
-            }
-            )))}
-        </div>
-
-        {/* 새로운 메시지 */}
-        <div className={`flex flex-col gap-4`}>
-          {messages?.map((item, index) => {
-            return (
-              <Message
-                key={index}
-                name={item.sender}
-                message={item.message}
-                time={item.sendAt}
-                isMyMessage={item.email === email} />)
-          })}
-        </div>
+            })}
+          </div>
+        }
       </div>
     </div>
   );

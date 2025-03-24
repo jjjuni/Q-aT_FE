@@ -22,17 +22,20 @@ export default function InSiteLayout({
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-
     <QueryClientProvider client={queryClient}>
-      <div className={`flex`}>
-        <Sidebar />
-        <div className={`${isSidebarOpen ? `sm:pl-[250px] lg:pl-[300px]` : ``} w-full transition-custom @container`}>
-          <Header />
-          {children}
+      <div className={`flex h-full`}>
+        <div className={`
+          ${isSidebarOpen ? `md:pl-[250px]` : ``}
+          w-full h-full transition-custom @container`}>
+          <Sidebar />
+          <div className={`${isSidebarOpen ? `@2xl:md:pl-[50px]` : ``} w-full h-screen transition-custom`}>
+            <Header />
+            {children}
+          </div>
         </div>
       </div>
       <div className={`z-[9999]`}>
-      <AlertModal/>
+        <AlertModal />
       </div>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
