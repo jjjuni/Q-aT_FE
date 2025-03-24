@@ -11,6 +11,7 @@ import useAuthStore from "@/store/useAuthStore";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/apis/axiosInstance";
 import { useInView } from "react-intersection-observer";
+import { ClipLoader } from "react-spinners";
 
 interface ChatContent {
   sender: string;
@@ -106,9 +107,22 @@ export default function ChatRoomPage() {
   };
 
   return (
-    <Container className={`pb-2 flex flex-col justify-end`}>
+    <Container className={`
+      pb-2 flex flex-col justify-end h-full
+      max-h-[calc(100vh-60px)] @2xl:max-h-[calc(100vh-80px)]`}>
       {isPending ? (
-        <div>로딩중...</div>
+        <div
+          className={`h-full justify-center items-center flex`}
+        >
+          <ClipLoader
+            className={`w-5 h-5`}
+            color="#333333"
+            cssOverride={{}}
+            loading
+            size={35}
+            speedMultiplier={0.7}
+          />
+        </div>
       ) : (
         <MessageList
           prevMessageData={prevMessageData}
@@ -116,7 +130,6 @@ export default function ChatRoomPage() {
           hasNextPage={hasNextPage}
           ref={ref} />
       )}
-
       <MessageInput messageInputText={messageInputText} setMessageInputText={setMessageInputText} sendMessage={sendMessage} />
     </Container>
   );

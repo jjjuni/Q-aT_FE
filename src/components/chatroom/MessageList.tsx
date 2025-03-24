@@ -86,17 +86,23 @@ const MessageList: React.FC<MessageListProps> = ({
   }, [messages])
 
   return (
-    <div ref={messageDivRef} className={`overflow-y-auto`}>
+    <div ref={messageDivRef} className={`overflow-y-auto grow`}>
       <div className="flex flex-col gap-4 px-5 py-2.5">
         {/* 환영 메시지 */}
         {!hasNextPage &&
           <div className={`py-2.5 border-b-2 border-solid border-gray-600`}>
-            <div className={`flex gap-2.5 px-2.5 py-2.5 justify-center`}>
-              <ChatIcon className={`w-9`} />
-              <p className={`text-display-32-b`}>&apos;&apos;{title}&apos;&apos; 에 오신 걸 환영합니다!</p>
+            <div className={`flex gap-2.5 px-2.5 py-1 @2xl:py-2.5 justify-center`}>
+              <ChatIcon className={`w-7 @2xl:w-9`} />
+              <p className={`
+                text-headline-20-b transition-custom mt-0.5
+                @2xl:text-display-32-b @2xl:mt-0`}>
+                &apos;&apos;{title}&apos;&apos; 에 오신 걸 환영합니다!</p>
             </div>
             <div className={`px-2.5 pb-2.5`}>
-              <p className={`text-subhead-16-sb text-gray-300 text-center`}>&apos;&apos;{title}&apos;&apos; 이 시작된 곳이에요</p>
+              <p className={`
+                text-caption-12-r text-gray-300 text-center transition-custom
+                @2xl:text-subhead-16-sb`}>
+                &apos;&apos;{title}&apos;&apos; 이 시작된 곳이에요</p>
             </div>
           </div>
         }
@@ -105,9 +111,26 @@ const MessageList: React.FC<MessageListProps> = ({
         <div ref={ref}></div>
 
         {/* 이전 메시지 */}
-        <div className={`flex flex-col-reverse gap-4`}>
-          {prevMessageData?.pages?.map((page) => (
-            page?.result?.chatList?.map((item, index) => {
+        {prevMessageData?.pages?.length && prevMessageData?.pages[0]?.result?.chatList?.length > 0 &&
+          <div className={`flex flex-col-reverse gap-4`}>
+            {prevMessageData?.pages?.map((page) => (
+              page?.result?.chatList?.map((item, index) => {
+                return (
+                  <Message
+                    key={index}
+                    name={item.sender}
+                    message={item.message}
+                    time={item.sendAt}
+                    isMyMessage={item.email === email} />)
+              }
+              )))}
+          </div>
+        }
+
+        {/* 새로운 메시지 */}
+        {messages.length > 0 &&
+          <div className={`flex flex-col gap-4`}>
+            {messages?.map((item, index) => {
               return (
                 <Message
                   key={index}
@@ -115,22 +138,9 @@ const MessageList: React.FC<MessageListProps> = ({
                   message={item.message}
                   time={item.sendAt}
                   isMyMessage={item.email === email} />)
-            }
-            )))}
-        </div>
-
-        {/* 새로운 메시지 */}
-        <div className={`flex flex-col gap-4`}>
-          {messages?.map((item, index) => {
-            return (
-              <Message
-                key={index}
-                name={item.sender}
-                message={item.message}
-                time={item.sendAt}
-                isMyMessage={item.email === email} />)
-          })}
-        </div>
+            })}
+          </div>
+        }
       </div>
     </div>
   );
