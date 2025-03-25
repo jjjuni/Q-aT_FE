@@ -1,12 +1,20 @@
 @layer utilities {
-    .transition-custom {
-        transition: var(--transition-custom);
+    .transition-all-300-out {
+        transition: var(--transition-all-300-out);
+    }
+    .transition-all-600-out {
+        transition: var(--transition-all-600-out);
+    }
+    .transition-all-700-out {
+        transition: var(--transition-all-700-out);
     }
 }
 
 @theme {
     /* 트랜지션 */
-    --transition-custom: all 300ms ease-out;
+    --transition-all-300-out: all 300ms ease-out;
+    --transition-all-600-out: all 600ms ease-out;
+    --transition-all-700-out: all 700ms ease-out;
 
     /* 색상 */
     --color-gray-50: #F7F7F7;
@@ -23,6 +31,11 @@
     --color-point: #FF7700;
 
     /* 타이포 */
+
+    --text-display-40-b: 40px;
+    --text-display-40-b--line-height: 1.2;
+    --text-display-40-b--font-weight: 700;
+
     --text-display-32-b: 32px;
     --text-display-32-b--line-height: 1.2;
     --text-display-32-b--font-weight: 700;

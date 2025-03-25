@@ -1,71 +1,113 @@
 'use client'
 
-import { useRouter } from "next/navigation";
-import { GoogleIcon, KakaoIcon, NaverIcon } from "../../../public/svgs";
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import Page1 from "@/components/home/page1";
+import HomePageTemplete from "@/components/home/Templete";
+import { ChatOnIcon, ChatPlusIcon, MiniLogo } from "../../../public/svgs";
 
-const LoginPage = () => {
+const MainPage = () => {
 
-  const router = useRouter();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRefs = useRef<HTMLElement[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const isScrolling = useRef(false);
 
-  const login = async (provider: string) => {
-    try {
-      router.push(`${process.env.NEXT_PUBLIC_DOMAIN}/oauth2/authorization/${provider}`)
-    } catch (error) {
-      console.log(error);
+  const sections = [
+    <Page1 key={1} sectionRefs={sectionRefs} />,
+    <HomePageTemplete
+      key={2}
+      index={1}
+      icon={
+        <ChatPlusIcon className={`w-9`} />}
+      title={"채팅방 생성"}
+      content_1={"원하는 이름의 채팅방을 생성하고"}
+      content_2={"친구를 초대해 함께해요!"}
+      imageUrl={"/images/create_ex.webp"}
+      sectionRefs={sectionRefs} />,
+    <HomePageTemplete
+      key={3}
+      index={2}
+      icon={
+        <ChatOnIcon className={`w-9`} />}
+      title={"채팅방 참가"}
+      content_1={"친구에게 받은 채팅서버 ID를 입력하고"}
+      content_2={"채팅방에 참가하세요!"}
+      imageUrl={"/images/join_ex.webp"}
+      sectionRefs={sectionRefs} />,
+    <HomePageTemplete
+      key={4}
+      index={3}
+      icon={
+        <MiniLogo className={`w-[93px]`} />}
+      content_1={"쉽고 빠르게,"}
+      content_2={"친구와 채팅을 시작해보세요!"}
+      imageUrl={"/images/chat_ex.webp"}
+      sectionRefs={sectionRefs} />,
+  ]
+
+  const scrollToSection = (index: number) => {
+    if (!containerRef.current || !sectionRefs.current) return;
+
+    isScrolling.current = true;
+
+    const target = sectionRefs.current[index];
+    const targetPosition = target.offsetTop;
+
+    console.log(targetPosition)
+
+    const startPosition = containerRef.current.scrollTop;
+    const distance = targetPosition - startPosition;
+    let startTime: number | null = null;
+
+    const duration = 1000;
+
+    const scroll = (currentTime: number) => {
+      if (!containerRef.current) return;
+
+      if (startTime === null) startTime = currentTime;
+      const progress = (currentTime - startTime) / duration;  // 0~1로 진행되는 비율
+
+      if (progress < 1) {
+        const easeProgress = Math.pow(progress - 1, 3) + 1;   // ease-out 함수
+        const scrollAmount = easeProgress * distance;         // 애니메이션 적용된 이동 거리
+        containerRef.current.scrollTop = startPosition + scrollAmount;
+        requestAnimationFrame(scroll);
+      } else {
+        containerRef.current.scrollTop = targetPosition;      // 마지막 위치로 정확하게 맞추기
+        setCurrentIndex(index);                               // 스크롤 완료 후 인덱스 갱신
+        isScrolling.current = false;                          // 스크롤 완료 상태로 변경
+      }
+    };
+
+    requestAnimationFrame(scroll);  // 애니메이션 시작
+  };
+
+  const handleScroll = (e: WheelEvent) => {
+    if (isScrolling.current) return;
+
+    if (e.deltaY > 0 && currentIndex < sections.length - 1) {
+      scrollToSection(currentIndex + 1);
+    } else if (e.deltaY < 0 && currentIndex > 0) {
+      scrollToSection(currentIndex - 1);
     }
-  }
+  };
+
+  useEffect(() => {
+    window.addEventListener('wheel', handleScroll);
+    return () => {
+      window.removeEventListener('wheel', handleScroll);
+    };
+  }, [currentIndex]);  // currentIndex 변경시, 리렌더링하도록 추가
 
   return (
-    <>
-      <div className={`
-        gap-8 w-screen h-[calc(100vh-90px)] px-[10%] flex flex-col items-center justify-center`}>
-        <div className={`
-          w-[165px] text-subhead-14-sb flex flex-col text-gray-300 gap-5
-          md:w-[190px] md:text-subhead-16-sb
-          lg:w-[235px] lg:text-headline-20-b`}>
-          <Image
-            width="1000"
-            height="1000"
-            src="/images/Q-aT.webp"
-            alt="로고" />
-          <p className={``}>로그인이 필요한 서비스입니다</p>
-        </div>
-        <div className={`
-          w-[280px] text-subhead-14-sb flex flex-col gap-2.5 justify-center items-center
-          md:w-[350px] md:text-subhead-16-sb
-          lg:w-[420px] lg:text-headline-20-m`}>
-          <div
-            className={`
-              h-[50px] flex gap-2 justify-center w-full text-center rounded-[12px] bg-[#FEE500] p-2 cursor-pointer
-              md:h-[55px]
-              lg:h-[60px]`}
-            onClick={() => login("kakao")}>
-            <KakaoIcon className={`w-[20px]`} />
-            <p className={`text-center content-center text-[#000000]`}>카카오 로그인</p>
-          </div>
-          <div
-            className={`
-              h-[50px] flex gap-2 justify-center w-full text-center rounded-[12px] bg-[#03C75A] p-2 cursor-pointer
-              md:h-[55px]
-              lg:h-[60px]`}
-            onClick={() => login("naver")}>
-            <NaverIcon className={`w-[20px]`} />
-            <p className={`text-center content-center text-white`}>네이버 로그인</p>
-          </div>
-          <div
-            className={`
-              h-[50px] flex gap-2 justify-center w-full text-center rounded-[12px] bg-gray-50 p-2 cursor-pointer
-              md:h-[55px]
-              lg:h-[60px]`}
-            onClick={() => login("google")}>
-            <GoogleIcon className={`w-[20px]`} />
-            <p className={`text-center content-center text-[#000000]`}>구글 로그인</p>
-          </div>
-        </div>
-      </div>
-    </>
-  )
+    <div
+      ref={containerRef}
+      className={`w-screen h-screen overflow-hidden`}>
+      {sections?.map((item) => (
+        item
+      ))}
+    </div>
+  );
 }
 
-export default LoginPage;
+export default MainPage;
