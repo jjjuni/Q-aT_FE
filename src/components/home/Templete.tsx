@@ -33,10 +33,10 @@ const HomePageTemplete: React.FC<HomePageTempleteProps> = ({
       ref={(el) => {
         if (el) sectionRefs.current[INDEX] = el;
       }}
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
+      // initial={{ opacity: 0, y: 50 }}
+      // animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: 0 * 0.1 }}
-      className={`w-screen h-screen pt-[100px] flex flex-col justify-center items-center gap-[40px]`}>
+      className={`w-screen h-screen flex flex-col justify-center items-center gap-[40px]`}>
       <div className={`flex flex-col items-center gap-5 text-center`}>
         <div className={`flex gap-2.5 text-gray-50`}>
           {icon}

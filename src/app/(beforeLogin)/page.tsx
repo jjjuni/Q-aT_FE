@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from "react";
-import Page1 from "@/components/home/page1";
+import Header from "@/components/home/Header";
 import HomePageTemplete from "@/components/home/Templete";
 import { ChatOnIcon, ChatPlusIcon, MiniLogo } from "../../../public/svgs";
 
@@ -12,10 +12,12 @@ const MainPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const isScrolling = useRef(false);
 
+  const [isHeader, setIsHeader] = useState(false);
+
   const sections = [
-    <Page1 key={1} sectionRefs={sectionRefs} />,
+    <Header key={0} isHeader={isHeader} sectionRefs={sectionRefs} />,
     <HomePageTemplete
-      key={2}
+      key={1}
       index={1}
       icon={
         <ChatPlusIcon className={`w-9`} />}
@@ -25,7 +27,7 @@ const MainPage = () => {
       imageUrl={"/images/create_ex.webp"}
       sectionRefs={sectionRefs} />,
     <HomePageTemplete
-      key={3}
+      key={2}
       index={2}
       icon={
         <ChatOnIcon className={`w-9`} />}
@@ -35,7 +37,7 @@ const MainPage = () => {
       imageUrl={"/images/join_ex.webp"}
       sectionRefs={sectionRefs} />,
     <HomePageTemplete
-      key={4}
+      key={3}
       index={3}
       icon={
         <MiniLogo className={`w-[93px]`} />}
@@ -52,8 +54,6 @@ const MainPage = () => {
 
     const target = sectionRefs.current[index];
     const targetPosition = target.offsetTop;
-
-    console.log(targetPosition)
 
     const startPosition = containerRef.current.scrollTop;
     const distance = targetPosition - startPosition;
@@ -84,10 +84,18 @@ const MainPage = () => {
 
   const handleScroll = (e: WheelEvent) => {
     if (isScrolling.current) return;
-
+  
     if (e.deltaY > 0 && currentIndex < sections.length - 1) {
-      scrollToSection(currentIndex + 1);
+      if (currentIndex === 0) {
+        isScrolling.current = true
+        setIsHeader(true);
+        setCurrentIndex(currentIndex + 1)
+        setTimeout(() => {
+          isScrolling.current = false
+        }, 1000);
+      } else scrollToSection(currentIndex + 1);
     } else if (e.deltaY < 0 && currentIndex > 0) {
+      if (currentIndex === 1) setIsHeader(false);
       scrollToSection(currentIndex - 1);
     }
   };

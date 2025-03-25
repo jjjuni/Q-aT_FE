@@ -8,6 +8,9 @@
     .transition-all-700-out {
         transition: var(--transition-all-700-out);
     }
+    .transition-all-1000-custom {
+        transition: var(--transition-all-1000-custom);
+    }
 }
 
 @theme {
@@ -15,6 +18,7 @@
     --transition-all-300-out: all 300ms ease-out;
     --transition-all-600-out: all 600ms ease-out;
     --transition-all-700-out: all 700ms ease-out;
+    --transition-all-1000-custom: all 1000ms cubic-bezier(0, 0, 0.3, 1);
 
     /* 색상 */
     --color-gray-50: #F7F7F7;

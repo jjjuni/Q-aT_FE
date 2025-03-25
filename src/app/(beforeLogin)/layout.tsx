@@ -7,8 +7,6 @@ export default function BeforeLayout({
 }>) {
   return (
     <div>
-      <div className={`fixed h-[100px] w-screen border-b border-gray-500`}>
-      </div>
       {children}
     </div>
   );
