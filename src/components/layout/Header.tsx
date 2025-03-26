@@ -79,17 +79,17 @@ const Header = () => {
 
   return (
     <div className={`
-      h-[60px] flex items-center w-full pl-5 pr-10 py-2.5 gap-5 text-gray-300 border-b border-solid border-gray-600 transition-custom
+      h-[60px] flex items-center w-full pl-5 pr-10 py-2.5 gap-5 text-gray-300 border-b border-solid border-gray-600 transition-all-300-out
       @2xl:h-[80px]`}>
       <MenuIcon 
-        className={`w-7 @2xl:w-9 cursor-pointer hover:text-gray-50 transition-custom`}
+        className={`w-7 @2xl:w-9 cursor-pointer hover:text-gray-50 transition-all-300-out`}
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}/>
       <div className={`flex gap-2.5 items-center `}>
-        {title === '새로운 채팅' && <ChatPlusIcon className={`w-7 @2xl:w-9 transition-custom`} />}
-        {title === '친구' && <FriendIcon className={`w-5 @2xl:w-6 transition-custom`} />}
-        {title === stringRoomUuid && <ChatIcon className={`w-7 @2xl:w-9 transition-custom`} />}
+        {title === '새로운 채팅' && <ChatPlusIcon className={`w-7 @2xl:w-9 transition-all-300-out`} />}
+        {title === '친구' && <FriendIcon className={`w-5 @2xl:w-6 transition-all-300-out`} />}
+        {title === stringRoomUuid && <ChatIcon className={`w-7 @2xl:w-9 transition-all-300-out`} />}
 
-        <p className={`mt-0.5 text-headline-20-b @2xl:mt-1 @2xl:text-display-24-b transition-custom`}>{title}</p>
+        <p className={`mt-0.5 text-headline-20-b @2xl:mt-1 @2xl:text-display-24-b transition-all-300-out`}>{title}</p>
       </div>
     </div>
   )

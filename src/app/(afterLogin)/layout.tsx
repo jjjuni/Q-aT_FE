@@ -26,9 +26,9 @@ export default function InSiteLayout({
       <div className={`flex h-full`}>
         <div className={`
           ${isSidebarOpen ? `md:pl-[250px]` : ``}
-          w-full h-full transition-custom @container`}>
+          w-full h-full transition-all-700-out @container`}>
           <Sidebar />
-          <div className={`${isSidebarOpen ? `@2xl:md:pl-[50px]` : ``} w-full h-screen transition-custom`}>
+          <div className={`${isSidebarOpen ? `@2xl:md:pl-[50px]` : ``} w-full h-screen transition-all-300-out`}>
             <Header />
             {children}
           </div>

@@ -67,14 +67,14 @@ export default function NewChatPage() {
     <Container className={`py-[60px] px-[32px] flex flex-col justify-between gap-10`}>
       <div>
         <div className={`
-          flex flex-col gap-4 px-2.5 py-2.5 pb-[20px] text-center border-b border-solid border-gray-600
+          flex flex-col gap-4 px-2.5 py-2.5 pb-[20px] text-center
           @2xl:pb-[40px]`}>
           <p className={`
-            text-headline-20-b text-gray-50 transition-custom
+            text-headline-20-b text-gray-50 transition-all-300-out
             @2xl:text-display-32-b`}>
             새로운 서버를 생성해 채팅을 시작해보세요!</p>
           <div className={`
-            text-caption-12-r flex flex-col gap-1 text-gray-300 transition-custom
+            text-caption-12-r flex flex-col gap-1 text-gray-300 transition-all-300-out
             @2xl:text-body-16-r @2xl:gap-2.5`}>
             <p>참여하고 싶은 채팅 서버 이름을 입력해주세요!</p>
             <p>친구를 초대해 함께하세요!</p>
@@ -101,15 +101,15 @@ export default function NewChatPage() {
       </div>
 
       <div>
-      <div className={`
-          flex flex-col gap-4 px-2.5 py-2.5 pb-[20px] text-center border-b border-solid border-gray-600
+        <div className={`
+          flex flex-col gap-4 px-2.5 py-2.5 pb-[20px] text-center
           @2xl:pb-[40px]`}>
           <p className={`
-            text-headline-20-b text-gray-50 transition-custom
+            text-headline-20-b text-gray-50 transition-all-300-out
             @2xl:text-display-32-b`}>
             기존의 서버에 참여해 채팅을 시작해보세요!</p>
           <div className={`
-            text-caption-12-r flex flex-col gap-2.5 text-gray-300 transition-custom
+            text-caption-12-r flex flex-col gap-2.5 text-gray-300 transition-all-300-out
             @2xl:text-body-16-r`}>
             <p>참여하고 싶은 채팅 서버 ID를 입력해주세요</p>
           </div>

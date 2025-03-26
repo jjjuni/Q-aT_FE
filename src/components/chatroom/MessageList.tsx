@@ -94,13 +94,13 @@ const MessageList: React.FC<MessageListProps> = ({
             <div className={`flex gap-2.5 px-2.5 py-1 @2xl:py-2.5 justify-center`}>
               <ChatIcon className={`w-7 @2xl:w-9`} />
               <p className={`
-                text-headline-20-b transition-custom mt-0.5
+                text-headline-20-b transition-all-300-out mt-0.5
                 @2xl:text-display-32-b @2xl:mt-0`}>
                 &apos;&apos;{title}&apos;&apos; 에 오신 걸 환영합니다!</p>
             </div>
             <div className={`px-2.5 pb-2.5`}>
               <p className={`
-                text-caption-12-r text-gray-300 text-center transition-custom
+                text-caption-12-r text-gray-300 text-center transition-all-300-out
                 @2xl:text-subhead-16-sb`}>
                 &apos;&apos;{title}&apos;&apos; 이 시작된 곳이에요</p>
             </div>

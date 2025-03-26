@@ -1,14 +1,13 @@
 'use client'
 
 import { usePathname, useRouter } from "next/navigation";
-import { ChatIcon, ChatPlusIcon, FriendIcon, LeftArrowIcon } from "../../../public/svgs";
+import { ChatIcon, ChatPlusIcon, FriendIcon, LeftArrowIcon, Logo } from "../../../public/svgs";
 import ChatRoomList from "../sidebar/ChatRoomList";
 import useAuthStore from "@/store/useAuthStore";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/apis/axiosInstance";
 import useSidebarStore from "@/store/useSidebarStore";
-import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 
 const Sidebar = () => {
@@ -46,7 +45,7 @@ const Sidebar = () => {
     setUser();
 
     const width = window.innerWidth;
-    if (width < 768){
+    if (width < 768) {
       setIsSidebarOpen(false);
     }
   }, []);
@@ -69,22 +68,17 @@ const Sidebar = () => {
       </AnimatePresence>
       <div className={`
       ${isSidebarOpen ? `left-0` : `@2xl:left-[-300px] left-[-250px]`} 
-      z-[500] w-[250px] fixed py-2.5 flex flex-col gap-2.5 bg-gray-800 min-h-full shrink-0 rounded-tr-[16px] transition-custom
+      z-[500] w-[250px] fixed py-2.5 flex flex-col gap-2.5 bg-gray-800 min-h-full shrink-0 rounded-tr-[16px] transition-all duration-700 ease-out
       @2xl:w-[300px]`}>
         <div
           className={`
           flex justify-between items-center px-7 text-display-24-b h-[40px] content-center text-gray-300 transition-custom z-[500]
           @2xl:text-display-28-b @2xl:h-[60px]`}>
-          <div
-            className={`cursor-pointer hover:text-gray-50 h-8 flex items-center`}
-            onClick={() => router.push('/home')}>
-            <Image
-              className={`w-[70px] @2xl:w-[92px] transition-custom`}
-              width="1000"
-              height="1000"
-              src="/images/Q-aT.webp"
-              alt="로고" />
-          </div>
+
+          <Logo
+            className={`w-[70px] @2xl:w-[92px] cursor-pointer transition-custom`}
+            onClick={() => router.push('/home')} />
+
           <LeftArrowIcon
             className={`w-5 @2xl:w-6 cursor-pointer hover:text-gray-50 transition-custom`}
             onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
