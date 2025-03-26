@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { GoogleIcon, KakaoIcon, Logo, NaverIcon } from "../../../../public/svgs";
-import Image from "next/image";
 
 const LoginPage = () => {
 

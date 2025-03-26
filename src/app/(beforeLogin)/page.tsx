@@ -12,6 +12,8 @@ const MainPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const isScrolling = useRef(false);
 
+  const touchStartY = useRef(0);
+
   const [isHeader, setIsHeader] = useState(false);
 
   const sections = [
@@ -20,7 +22,7 @@ const MainPage = () => {
       key={1}
       index={1}
       icon={
-        <ChatPlusIcon className={`w-9`} />}
+        <ChatPlusIcon className={`h-full`} />}
       title={"채팅방 생성"}
       content_1={"원하는 이름의 채팅방을 생성하고"}
       content_2={"친구를 초대해 함께해요!"}
@@ -30,7 +32,7 @@ const MainPage = () => {
       key={2}
       index={2}
       icon={
-        <ChatOnIcon className={`w-9`} />}
+        <ChatOnIcon className={`h-full`} />}
       title={"채팅방 참가"}
       content_1={"친구에게 받은 채팅서버 ID를 입력하고"}
       content_2={"채팅방에 참가하세요!"}
@@ -40,7 +42,7 @@ const MainPage = () => {
       key={3}
       index={3}
       icon={
-        <MiniLogo className={`w-[93px]`} />}
+        <MiniLogo className={`h-full`} />}
       content_1={"쉽고 빠르게,"}
       content_2={"친구와 채팅을 시작해보세요!"}
       imageUrl={"/images/chat_ex.webp"}
@@ -100,12 +102,44 @@ const MainPage = () => {
     }
   };
 
+  const handleTouchStart = (e: TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    if (isScrolling.current) return;
+
+    const touchEndY = e.touches[0].clientY;
+    const deltaY = touchStartY.current - touchEndY;
+
+    console.log(deltaY)
+
+    if (deltaY > 30 && currentIndex < sections.length - 1) {
+      if (currentIndex === 0) {
+        isScrolling.current = true
+        setIsHeader(true);
+        setCurrentIndex(currentIndex + 1)
+        setTimeout(() => {
+          isScrolling.current = false
+        }, 1000);
+      } else scrollToSection(currentIndex + 1);
+    } else if (deltaY < -30 && currentIndex > 0) {
+      if (currentIndex === 1) setIsHeader(false);
+      scrollToSection(currentIndex - 1);
+    }
+  };
+
   useEffect(() => {
-    window.addEventListener('wheel', handleScroll);
+    window.addEventListener("wheel", handleScroll);
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchmove", handleTouchMove);
+
     return () => {
-      window.removeEventListener('wheel', handleScroll);
+      window.removeEventListener("wheel", handleScroll);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [currentIndex]);  // currentIndex 변경시, 리렌더링하도록 추가
+  }, [currentIndex]);   // currentIndex 변경시, 리렌더링하도록 추가
 
   return (
     <div

@@ -8,7 +8,6 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/apis/axiosInstance";
 import useSidebarStore from "@/store/useSidebarStore";
-import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 
 const Sidebar = () => {

@@ -23,11 +23,13 @@ const Header: React.FC<HeaderProp> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: 0 * 0.1 }}
       className={`
-        ${isHeader ? `h-[100px]` : `h-screen`}
+        ${isHeader ? `h-[60px] lg:h-[100px]` : `h-screen`}
         w-screen absolute flex justify-center items-center bg-gray-700 border-b border-solid border-gray-500 overflow-hidden transition-all-1000-custom`}>
-      <div className={`flex flex-col items-center text-gray-300 text-display-32-b`}>
+      <div className={`
+        text-headline-20-b flex flex-col items-center text-gray-300 
+        md:text-display-24-b lg:text-display-32-b`}>
         <Logo className={`
-          ${isHeader ? `h-[48px]` : `h-[80px] mb-8`}
+          ${isHeader ? `h-[32px] lg:h-[48px]` : `h-[48px] mb-4 md:h-[60px] md:mb-6 lg:h-[80px] lg:mb-8`}
           transition-all-1000-custom`} />
 
         <AnimatePresence>
@@ -40,9 +42,13 @@ const Header: React.FC<HeaderProp> = ({
               className={`flex flex-col items-center`}>
               <p className={`transition-all-1000-custom`}>쉽고 빠르게,</p>
               <p className={`transition-all-1000-custom`}>어디서나 자유롭게,</p>
-              <p className={`transition-all-1000-custom`}>aT <span className={`text-white`}>Q-aT</span></p>
-              <div className={`pt-5`}>
-                <LeftArrowIcon className={`rotate-270 w-6 cursor-pointer hover:text-gray-50 transition-all-300-out`} />
+              <p className={`transition-all-1000-custom`}>aT <span className={`text-white text-display-24-b md:text-display-28-b lg:text-display-40-b transition-all-1000-custom`}>Q-aT</span></p>
+              <div className={`pt-3 md:pt-4 lg:pt-5 transition-all-1000-custom`}>
+                <LeftArrowIcon 
+                  className={`
+                    rotate-270 cursor-pointer hover:text-gray-50 transition-all-300-out
+                    w-3 md:w-4 lg:w-6 `} 
+                  />
               </div>
             </motion.div>
           }
