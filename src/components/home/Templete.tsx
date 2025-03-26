@@ -11,7 +11,7 @@ interface HomePageTempleteProps {
 
   imageUrl: string;
 
-  sectionRefs: RefObject<HTMLElement[]>
+  sectionRefs: RefObject<HTMLElement[]>;
 }
 
 const HomePageTemplete: React.FC<HomePageTempleteProps> = ({
@@ -26,12 +26,10 @@ const HomePageTemplete: React.FC<HomePageTempleteProps> = ({
   sectionRefs,
 }) => {
 
-  const INDEX = index;
-
   return (
     <motion.section
       ref={(el) => {
-        if (el) sectionRefs.current[INDEX] = el;
+        if (el) sectionRefs.current[index] = el;
       }}
       transition={{ duration: 0.8, delay: 0 * 0.1 }}
       className={`w-screen h-screen flex flex-col justify-center items-center gap-[40px]`}>

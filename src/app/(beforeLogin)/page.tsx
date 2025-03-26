@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Header from "@/components/home/Header";
 import HomePageTemplete from "@/components/home/Templete";
 import { ChatOnIcon, ChatPlusIcon, MiniLogo } from "../../../public/svgs";
+import LoginPage from "@/components/home/LoginPage";
 
 const MainPage = () => {
 
@@ -17,7 +18,13 @@ const MainPage = () => {
   const [isHeader, setIsHeader] = useState(false);
 
   const sections = [
-    <Header key={0} isHeader={isHeader} sectionRefs={sectionRefs} />,
+    <Header 
+      key={0} 
+      isHeader={isHeader} 
+      setIsHeader={setIsHeader}
+      setCurrentIndex={setCurrentIndex}
+      isScrolling={isScrolling}
+      sectionRefs={sectionRefs} />,
     <HomePageTemplete
       key={1}
       index={1}
@@ -47,6 +54,10 @@ const MainPage = () => {
       content_2={"친구와 채팅을 시작해보세요!"}
       imageUrl={"/images/chat_ex.webp"}
       sectionRefs={sectionRefs} />,
+    <LoginPage
+      key={4} 
+      index={4} 
+      sectionRefs={sectionRefs}/>
   ]
 
   const scrollToSection = (index: number) => {
